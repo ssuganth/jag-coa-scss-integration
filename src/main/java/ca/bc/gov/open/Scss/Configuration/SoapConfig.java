@@ -78,8 +78,7 @@ public class SoapConfig extends WsConfigurerAdapter {
         wsdl11Definition.setPortTypeName("scss");
         wsdl11Definition.setCreateSoap11Binding(true);
         wsdl11Definition.setLocationUri("/ws");
-        wsdl11Definition.setTargetNamespace(
-                "http://brooks/SCSS.Source.CeisScss.ws.provider:CeisScss");
+        wsdl11Definition.setTargetNamespace(SoapConfig.SOAP_NAMESPACE);
         wsdl11Definition.setSchema(schema3());
         return wsdl11Definition;
     }

@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 import ca.bc.gov.open.Scss.Controllers.CourtController;
 import com.example.demp.wsdl.*;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.Collections;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -207,19 +208,34 @@ public class CourtControllerTests {
         ResponseEntity<String> responseEntity = new ResponseEntity<>("", HttpStatus.OK);
 
         var hr = new SaveHearingResults();
-        //    var res = new HearingResult();
-        //    var res2 = new HearingResult2();
-        //    var cd = new CaseDetails();
-        //    var ca = new CaseAugmentation();
-        //    var ch = new CaseHearing();
-        //    var ea = new CourtEventAppearance();
-        //    ea.setTimeMeasureDetails();
-        //    ch.setCourtEventAppearance();
-        //    ca.setCaseHearing();
-        //    cd.setCaseAugmentation();
-        //    res2.setCaseDetails();
-        //    res.setHearingResult();
-        //    hr.setHearingResult();
+        var res = new HearingResult();
+        var res2 = new HearingResult2();
+        var cd = new CaseDetails();
+        cd.setCaseFiling("A");
+        cd.setCaseTrackingID(BigDecimal.ONE);
+
+        var ca = new CaseAugmentation();
+        var ch = new CaseHearing();
+        var ea = new CourtEventAppearance();
+        ea.setActivityStatus("A");
+        ea.setCourtAppearanceCourt("A");
+        ea.setActivityStatus("A");
+        ea.setCancellationStatus("A");
+        ea.setCourtAppearanceDate(Instant.now());
+        ea.setCourtEventSequenceID("A");
+
+        var tm = new TimeMeasureDetails();
+        tm.setMeasureText(BigDecimal.ONE);
+        tm.setMeasureEstimatedIndicator(true);
+        tm.setMeasureUnitText("A");
+
+        ea.setTimeMeasureDetails(tm);
+        ch.setCourtEventAppearance(ea);
+        ca.setCaseHearing(ch);
+        cd.setCaseAugmentation(ca);
+        res2.setCaseDetails(cd);
+        res.setHearingResult(res2);
+        hr.setHearingResult(res);
 
         //     Set up to mock ords response
         when(restTemplate.exchange(

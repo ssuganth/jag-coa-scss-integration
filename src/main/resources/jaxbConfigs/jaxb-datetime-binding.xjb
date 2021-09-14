@@ -3,6 +3,6 @@
             <jaxb:serializable uid="1" />
             <jaxb:javaType name="java.time.Instant" xmlType="xsd:dateTime"
                    parseMethod="ca.bc.gov.open.Scss.Models.Serializers.InstantSerializer.parse"
-                 printMethod="ca.bc.gov.open.Scss.Models.Serializers.InstantSerializer.print" />
+                   printMethod="ca.bc.gov.open.Scss.Models.Serializers.InstantSerializer.print" />
         </jaxb:globalBindings>
 </jaxb:bindings>

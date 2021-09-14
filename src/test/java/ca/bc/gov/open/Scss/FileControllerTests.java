@@ -178,23 +178,8 @@ public class FileControllerTests {
 
     @Test
     public void securityTestFail_Then403() throws Exception {
-        String payload =
-                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:scss=\"http://brooks/SCSS.Source.CeisScss.ws.provider:CeisScss\">\n"
-                        + "   <soapenv:Header/>\n"
-                        + "   <soapenv:Body>\n"
-                        + "      <scss:fileNumberSearch>\n"
-                        + "         <filter>\n"
-                        + "            <courtFileNumber>9950</courtFileNumber>\n"
-                        + "            <locationId>16218.0026</locationId>\n"
-                        + "            <courtLevelCode>P</courtLevelCode>\n"
-                        + "            <courtClassCode>F</courtClassCode>\n"
-                        + "         </filter>\n"
-                        + "      </scss:fileNumberSearch>\n"
-                        + "   </soapenv:Body>\n"
-                        + "</soapenv:Envelope>";
-
         var response =
-                mockMvc.perform(post("/ws").contentType(MediaType.TEXT_XML).content(payload))
+                mockMvc.perform(post("/ws").contentType(MediaType.TEXT_XML))
                         .andExpect(status().is4xxClientError())
                         .andReturn();
         assert response.getResponse().getStatus() == 401;

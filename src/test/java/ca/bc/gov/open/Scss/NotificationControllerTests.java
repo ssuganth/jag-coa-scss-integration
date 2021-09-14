@@ -218,7 +218,7 @@ public class NotificationControllerTests {
         jaxbMarshaller.marshal(nr, baos);
         out = baos.toString();
 
-        assert out.contains(nowStr.substring(0, nowStr.length() - 1));
+        assert out.contains(nowStr.substring(0, nowStr.length() - 1)) && !out.contains(nowStr);
     }
 
     @Test
@@ -228,26 +228,20 @@ public class NotificationControllerTests {
                         + "         <hearingResult>\n"
                         + "            <HearingResult>\n"
                         + "               <CaseDetails>\n"
-                        + "                  <CaseTrackingID>11</CaseTrackingID>\n"
-                        + "                  <CaseFiling>2222</CaseFiling>\n"
+                        + "                  <CaseTrackingID>1</CaseTrackingID>\n"
+                        + "                  <CaseFiling>1</CaseFiling>\n"
                         + "                  <CaseAugmentation>\n"
                         + "                     <CaseHearing>\n"
                         + "                        <CourtEventAppearance>\n"
-                        + "                           <CourtAppearanceCourt>11</CourtAppearanceCourt>\n"
+                        + "                           <CourtAppearanceCourt>1</CourtAppearanceCourt>\n"
                         + "                           <CourtAppearanceDate>03-SEP-11</CourtAppearanceDate>\n"
-                        + "                           <CourtAppearanceCategoryText>APN</CourtAppearanceCategoryText>\n"
-                        + "                           <!--Optional:-->\n"
-                        + "                           <CourtEventSequenceID>?</CourtEventSequenceID>\n"
+                        + "                           <CourtAppearanceCategoryText>A</CourtAppearanceCategoryText>\n"
+                        + "                           <CourtEventSequenceID></CourtEventSequenceID>\n"
                         + "                           <ActivityStatus>NOT PROCEDING</ActivityStatus>\n"
-                        + "                           <!--Optional:-->\n"
                         + "                           <CancellationStatus>Abandoned</CancellationStatus>\n"
-                        + "                           <!--Optional:-->\n"
                         + "                           <TimeMeasureDetails>\n"
-                        + "                              <!--Optional:-->\n"
-                        + "                              <MeasureText>11</MeasureText>\n"
-                        + "                              <!--Optional:-->\n"
-                        + "                              <MeasureUnitText>M/s</MeasureUnitText>\n"
-                        + "                              <!--Optional:-->\n"
+                        + "                              <MeasureText>1</MeasureText>\n"
+                        + "                              <MeasureUnitText>A</MeasureUnitText>\n"
                         + "                              <MeasureEstimatedIndicator>true</MeasureEstimatedIndicator>\n"
                         + "                           </TimeMeasureDetails>\n"
                         + "                        </CourtEventAppearance>\n"
@@ -264,6 +258,7 @@ public class NotificationControllerTests {
         SaveHearingResults out =
                 (SaveHearingResults)
                         jaxbUnmarshaller.unmarshal(new ByteArrayInputStream(in.getBytes()));
+
         assert out != null;
     }
 }

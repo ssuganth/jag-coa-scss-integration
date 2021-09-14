@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-
     <!-- STDOUT appender -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -35,10 +34,7 @@
 
     <!-- Set the root level to trace. We'll filter on the appenders -->
     <root level="INFO">
-        <!-- Http collector-->
-
         <appender-ref ref="STDOUT"/>
-        <!--TCP 15000 collector-->
         <appender-ref ref="SOCKET"/>
         <appender-ref ref="SPLUNK"/>
     </root>

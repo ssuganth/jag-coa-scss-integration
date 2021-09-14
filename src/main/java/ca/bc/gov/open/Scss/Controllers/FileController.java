@@ -34,10 +34,26 @@ public class FileController {
 
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(host + "FileNumberSearch")
-                        .queryParam("courtFileNumber", search.getFilter().getCourtFileNumber())
-                        .queryParam("locationId", search.getFilter().getLocationId())
-                        .queryParam("courtLevelCode", search.getFilter().getCourtLevelCode())
-                        .queryParam("courtClassCode", search.getFilter().getCourtClassCode());
+                        .queryParam(
+                                "courtFileNumber",
+                                search.getFilter() != null
+                                        ? search.getFilter().getCourtFileNumber()
+                                        : null)
+                        .queryParam(
+                                "locationId",
+                                search.getFilter() != null
+                                        ? search.getFilter().getLocationId()
+                                        : null)
+                        .queryParam(
+                                "courtLevelCode",
+                                search.getFilter() != null
+                                        ? search.getFilter().getCourtLevelCode()
+                                        : null)
+                        .queryParam(
+                                "courtClassCode",
+                                search.getFilter() != null
+                                        ? search.getFilter().getCourtClassCode()
+                                        : null);
 
         HttpEntity<FileNumberSearchResponse> resp =
                 restTemplate.exchange(
@@ -95,11 +111,27 @@ public class FileController {
             @RequestPayload FileNumbeSearchPublicAccess search) {
 
         UriComponentsBuilder builder =
-                UriComponentsBuilder.fromHttpUrl(host + "FileNumberSearch")
-                        .queryParam("courtFileNumber", search.getFilter().getCourtFileNumber())
-                        .queryParam("locationId", search.getFilter().getLocationId())
-                        .queryParam("courtLevelCode", search.getFilter().getCourtLevelCode())
-                        .queryParam("courtClassCode", search.getFilter().getCourtClassCode());
+                UriComponentsBuilder.fromHttpUrl(host + "FileNumberSearchPublicAccess")
+                        .queryParam(
+                                "courtFileNumber",
+                                search.getFilter() != null
+                                        ? search.getFilter().getCourtFileNumber()
+                                        : null)
+                        .queryParam(
+                                "locationId",
+                                search.getFilter() != null
+                                        ? search.getFilter().getLocationId()
+                                        : null)
+                        .queryParam(
+                                "courtLevelCode",
+                                search.getFilter() != null
+                                        ? search.getFilter().getCourtLevelCode()
+                                        : null)
+                        .queryParam(
+                                "courtClassCode",
+                                search.getFilter() != null
+                                        ? search.getFilter().getCourtClassCode()
+                                        : null);
 
         HttpEntity<FileNumbeSearchPublicAccessResponse> resp =
                 restTemplate.exchange(

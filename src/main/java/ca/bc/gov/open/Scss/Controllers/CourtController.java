@@ -24,14 +24,12 @@ public class CourtController {
 
     @Autowired
     public CourtController(RestTemplate restTemplate) {
-
         this.restTemplate = restTemplate;
     }
 
     @PayloadRoot(namespace = SoapConfig.SOAP_NAMESPACE, localPart = "getCourtFile")
     @ResponsePayload
     public GetCourtFileResponse getCourtFile(@RequestPayload GetCourtFile search) {
-
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(host + "GetCourtFile")
                         .queryParam("physicalFileId", search.getPhysicalFileId());
@@ -104,14 +102,42 @@ public class CourtController {
     public PartyNameSearchResponse partyNameSearch(@RequestPayload PartyNameSearch search) {
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(host + "PartyNameSearch")
-                        .queryParam("courtClass", search.getFilter().getCourtClass())
-                        .queryParam("agencyId", search.getFilter().getAgencyId())
-                        .queryParam("searchType", search.getFilter().getSearchType())
-                        .queryParam("firstName", search.getFilter().getFirstName())
-                        .queryParam("courtLevel", search.getFilter().getCourtLevel())
-                        .queryParam("page_", search.getFilter().getPage())
-                        .queryParam("name_", search.getFilter().getName())
-                        .queryParam("roleType", search.getFilter().getRoleType());
+                        .queryParam(
+                                "courtClass",
+                                search.getFilter() != null
+                                        ? search.getFilter().getCourtClass()
+                                        : null)
+                        .queryParam(
+                                "agencyId",
+                                search.getFilter() != null
+                                        ? search.getFilter().getAgencyId()
+                                        : null)
+                        .queryParam(
+                                "searchType",
+                                search.getFilter() != null
+                                        ? search.getFilter().getSearchType()
+                                        : null)
+                        .queryParam(
+                                "firstName",
+                                search.getFilter() != null
+                                        ? search.getFilter().getFirstName()
+                                        : null)
+                        .queryParam(
+                                "courtLevel",
+                                search.getFilter() != null
+                                        ? search.getFilter().getCourtLevel()
+                                        : null)
+                        .queryParam(
+                                "page_",
+                                search.getFilter() != null ? search.getFilter().getPage() : null)
+                        .queryParam(
+                                "name_",
+                                search.getFilter() != null ? search.getFilter().getName() : null)
+                        .queryParam(
+                                "roleType",
+                                search.getFilter() != null
+                                        ? search.getFilter().getRoleType()
+                                        : null);
 
         HttpEntity<SearchResults> resp =
                 restTemplate.exchange(
@@ -130,7 +156,7 @@ public class CourtController {
     public SaveHearingResultsResponse saveHearingResults(
             @RequestPayload SaveHearingResults search) {
         UriComponentsBuilder builder =
-                UriComponentsBuilder.fromHttpUrl(host + "PartyNameSearch")
+                UriComponentsBuilder.fromHttpUrl(host + "SaveHearingResults")
                         .queryParam("hearingResult", search.getHearingResult());
 
         HttpEntity<String> resp =
