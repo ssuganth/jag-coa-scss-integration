@@ -47,7 +47,6 @@ public class SoapConfig extends WsConfigurerAdapter {
     }
 
     private MappingJackson2HttpMessageConverter createMappingJacksonHttpMessageConverter() {
-
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
         converter.setObjectMapper(objectMapper());
         return converter;
