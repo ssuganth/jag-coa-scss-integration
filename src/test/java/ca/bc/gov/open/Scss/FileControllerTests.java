@@ -120,7 +120,7 @@ public class FileControllerTests {
         //     Set up to mock ords response
         when(restTemplate.exchange(
                         Mockito.any(String.class),
-                        Mockito.eq(HttpMethod.DELETE),
+                        Mockito.eq(HttpMethod.PUT),
                         Mockito.<HttpEntity<String>>any(),
                         Mockito.<Class<UnlinkFileResponse>>any()))
                 .thenReturn(responseEntity);
