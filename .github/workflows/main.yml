@@ -14,6 +14,10 @@ jobs:
   
     # The type of runner that the job will run on
     runs-on: ubuntu-20.04
+    
+    env:
+      BASIC_AUTH_USER: ${{ secrets.BASIC_AUTH_USER }}
+      BASIC_AUTH_PASS: ${{ secrets.BASIC_AUTH_PASS }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -39,30 +43,24 @@ jobs:
         
       # Runs build steps
       - name: Maven Package
-        env:
-          BASIC_AUTH_USER: ${{ secrets.BASIC_AUTH_USER }}
-          BASIC_AUTH_PASS: ${{ secrets.BASIC_AUTH_PASS }}
         #run: ./mvnw clean package
         run: mvn clean package
         
       - name: Maven Verify
-        env:
-          BASIC_AUTH_USER: ${{ secrets.BASIC_AUTH_USER }}
-          BASIC_AUTH_PASS: ${{ secrets.BASIC_AUTH_PASS }}
         #run: ./mvnw clean verify
         run: mvn clean verify
           
       - name: Login to OpenShift
         uses: docker/login-action@v1
         with:
-          registry: default-route-openshift-image-registry.apps.sandbox.x8i5.p1.openshiftapps.com
-          username: ssuganth
-          password: sha256~wJwZTPWIiEYkubjPj-uQRyUv8xu02C-C_NVsktybZCw
+          registry: ""
+          username: ""
+          password: ""
 
       - name: Create & Push Artifact Image to Openshift Image Stream
         env:
           CONTEXT: .
-          IMAGE: default-route-openshift-image-registry.apps.sandbox.x8i5.p1.openshiftapps.com/ssuganth-dev/scssdemo-api:dev
+          IMAGE: ""
         run: |
           docker build \
             --tag ${IMAGE} \
