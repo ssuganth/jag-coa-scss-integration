@@ -18,6 +18,8 @@ jobs:
     env:
       FILE_COUNTER: 0
       CC_TEST_REPORTER_ID: 7f772d04ebaf6051b42d9fae8f0bd88938b3363e4ebe944d70a8142923485a8f
+      BASIC_AUTH_USER: ${{ secrets.BASIC_AUTH_USER }}
+      BASIC_AUTH_PASS: ${{ secrets.BASIC_AUTH_PASS }}
       ACTION_DEBUG: true
 
     # Steps represent a sequence of tasks that will be executed as part of the job
