@@ -1,9 +1,8 @@
 # This is a basic workflow to help you get started with Actions
 name: CodeClimate Workflow
 
-# Controls when the workflow will run
+# Triggers that controls when the workflow will run
 on:
-
   push:
     branches: [master]
   pull_request:
