@@ -3,7 +3,6 @@ describe('File Controller Tests', () => {
    it('Filenumbersearch test good result', () => {
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "text/xml");
-      myHeaders.append("Authorization", "Basic d3NfY2NkOnNwYXJrbGUxZGV2");
       myHeaders.append("Cookie", "ssnid=885f8220165311ecaf81c6d7dc943fe7");
       cy.request({
          method: 'POST',
