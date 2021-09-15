@@ -91,7 +91,7 @@ public class NotificationController {
         HttpEntity<HashMap> resp =
                 restTemplate.exchange(
                         builder.toUriString(),
-                        HttpMethod.GET,
+                        HttpMethod.DELETE,
                         new HttpEntity<>(new HttpHeaders()),
                         HashMap.class);
 
