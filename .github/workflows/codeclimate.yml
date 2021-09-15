@@ -53,7 +53,7 @@ jobs:
         run: mvn jacoco:report
         
         # Formatting the Code Coverage Report
-      - name: Format the Frontend Citizen Portal coverage report
+      - name: Format the coverage report
         run: ./cc-test-reporter format-coverage ./target/site/jacoco/jacoco.xml -t jacoco -o ./target/site/jacoco/codeclimate.json;
         
         # Upload JSON for debugging purposes
