@@ -54,7 +54,7 @@ jobs:
         
         # Formatting the Code Coverage Report
       - name: Format the coverage report
-        run: ./cc-test-reporter format-coverage ./target/site/jacoco/jacoco.xml -t jacoco -o ./target/site/jacoco/codeclimate.json --debug
+        run: JACOCO_SOURCE_PATH=src/main/java ./cc-test-reporter format-coverage ./target/site/jacoco/jacoco.xml -t jacoco -o ./target/site/jacoco/codeclimate.json
         
         # Upload JSON for debugging purposes
       - name: Upload JSON for debugging purposes
