@@ -162,7 +162,7 @@ public class CourtController {
         HttpEntity<String> resp =
                 restTemplate.exchange(
                         builder.toUriString(),
-                        HttpMethod.GET,
+                        HttpMethod.POST,
                         new HttpEntity<>(new HttpHeaders()),
                         String.class);
 

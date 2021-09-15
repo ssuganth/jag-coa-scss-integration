@@ -80,7 +80,7 @@ public class FileController {
         HttpEntity<LinkFileResponse> resp =
                 restTemplate.exchange(
                         builder.toUriString(),
-                        HttpMethod.GET,
+                        HttpMethod.POST,
                         new HttpEntity<>(new HttpHeaders()),
                         LinkFileResponse.class);
 
@@ -98,7 +98,7 @@ public class FileController {
         HttpEntity<HashMap> resp =
                 restTemplate.exchange(
                         builder.toUriString(),
-                        HttpMethod.GET,
+                        HttpMethod.PUT,
                         new HttpEntity<>(new HttpHeaders()),
                         HashMap.class);
 
