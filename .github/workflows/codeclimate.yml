@@ -56,7 +56,6 @@ jobs:
       - name: Format the Frontend Citizen Portal coverage report
         run: ./cc-test-reporter format-coverage ${{github.workspace}}/target/site/jacoco/jacoco.xml -t jacoco -o ${{github.workspace}}/target/site/jacoco/codeclimate.json;
         
-      
         # Upload JSON for debugging purposes
       - name: Upload JSON for debugging purposes
         uses: actions/upload-artifact@v2
