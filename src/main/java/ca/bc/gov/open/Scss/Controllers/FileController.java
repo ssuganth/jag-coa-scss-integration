@@ -71,11 +71,7 @@ public class FileController {
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(host + "LinkFiles")
                         .queryParam("caseActionNumber", search.getCaseActionNumber())
-                        .queryParam(
-                                "physicalFileId",
-                                search.getPhysicalFileId() != null
-                                        ? search.getPhysicalFileId().toString()
-                                        : null);
+                        .queryParam("physicalFileId", search.getPhysicalFileId());
 
         HttpEntity<LinkFileResponse> resp =
                 restTemplate.exchange(

@@ -22,8 +22,8 @@ public class InstantDeserializer extends JsonDeserializer<Instant> {
                             .parse(jsonParser.getText());
             return d.toInstant();
         } catch (ParseException e) {
-            log.error(e.getLocalizedMessage());
+            log.error("Could not parse date " + jsonParser.getText());
+            return null;
         }
-        return null;
     }
 }
