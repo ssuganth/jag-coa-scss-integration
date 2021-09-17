@@ -2,7 +2,7 @@
 * Reference: https://github.com/bcgov/networkpolicy-migration-workshop
 
 ### Template
-* defaultNetworkPolicies.yaml (downloaded from above link)
+* defaultNetworkPolicies.yaml (downloaded QuickStart.yaml from above link)
 
 
 ### Command to execute template

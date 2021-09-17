@@ -47,3 +47,4 @@ objects:
       ingress:
       - from:
         - podSelector: {}
+    
