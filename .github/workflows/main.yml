@@ -1,5 +1,6 @@
-# This is a basic workflow to help you get started with Actions
-name: Main-Build Image and Push to Openshift Registry
+# This is the main workflow that creates a new image and push to Openshift image stream which in turn triggers the deployment
+
+name: Main - Build Image and Push to Openshift Registry
 
 # Controls when the workflow will run
 on:
@@ -10,8 +11,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
-  
+  build-push-image:
     # The type of runner that the job will run on
     runs-on: ubuntu-20.04
     
@@ -30,53 +30,31 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      
-      #- name: Install wrapper
-      #  run: mvn -N io.takari:maven:wrapper
-        
-      #- name: Change wrapper permissions
-      #  run: chmod +x ./mvnw
-      
-      # This run the linter in check mode so that if the style is not followed the build should fail
-      - name: Maven Spotless Check
-        run: mvn spotless:check
         
       # Runs build steps
       - name: Maven Package
-        #run: ./mvnw clean package
         run: mvn clean package
         
       - name: Maven Verify
-        #run: ./mvnw clean verify
         run: mvn clean verify
-          
-      - name: Login to OpenShift
+      
+      #Login to OpenShift Container Repository
+      - name: Login to OpenShift Container Repository
         uses: docker/login-action@v1
         with:
-          registry: ""
-          username: ""
-          password: ""
+          registry: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}
+          username: ${{secrets.OPENSHIFT_SA_USERNAME}}
+          password: ${{secrets.OPENSHIFT_SA_PASSWORD}}
 
-      - name: Create & Push Artifact Image to Openshift Image Stream
+      #Build and push image to OpenShift Image stream
+      - name: Build & Push Image to Openshift Image Stream
         env:
+          COMPOSE_DOCKER_CLI_BUILD: 1
+          DOCKER_BUILDKIT: 1
           CONTEXT: .
-          IMAGE: ""
+          IMAGE: ${{secrets.OPENSHIFT_EXTERNAL_REPOSITORY}}/${{secrets.OPENSHIFT_LICENSE_PLATE}}-tools/jag-scss:${{secrets.OPENSHIFT_ENV_TAG}}
         run: |
           docker build \
             --tag ${IMAGE} \
             ${CONTEXT}
             docker push ${IMAGE}
-      
- #     - name: Create staging dir
- #        run: mkdir staging && cp target/*.jar staging
- #      
- #    - name: Upload Artifact  
- #        uses: actions/upload-artifact@v2
- #        with:
- #         name: Package
- #         path: staging
- #     
- #     - name: Download a single artifact
- #       uses: actions/download-artifact@v2
- #       with:
- #         name: Package
