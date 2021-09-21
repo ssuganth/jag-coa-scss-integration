@@ -1,7 +1,7 @@
 describe('Health Controller Tests', () => {
 
-
   it('Test Actuator Health Api', () => {
+
     cy.request({
       url: Cypress.env("scss_host") + 'actuator/health',
       headers: {
@@ -13,8 +13,8 @@ describe('Health Controller Tests', () => {
     })
   })
 
-
   it('Test Health Api', () => {
+
     var payload = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:scss="http://brooks/SCSS.Source.CeisScss.ws.provider:CeisScss">
         <soapenv:Header/>
         <soapenv:Body>
@@ -31,12 +31,12 @@ describe('Health Controller Tests', () => {
       }
     }).then((response) => {
       expect(response.status).to.eq(200)
-      cy.readFile("./cypress/ExampleRequests/getHealthV1.xml").should("eq",response.body)
+      cy.readFile("./cypress/ExampleRequests/getHealthV1.xml").should("eq", response.body)
     })
-  })  
-  
+  })
 
   it('Test Ping Api', () => {
+
     var payload = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:scss="http://brooks/SCSS.Source.CeisScss.ws.provider:CeisScss">
         <soapenv:Header/>
         <soapenv:Body>
@@ -53,8 +53,7 @@ describe('Health Controller Tests', () => {
       }
     }).then((response) => {
       expect(response.status).to.eq(200)
-      cy.readFile("./cypress/ExampleRequests/getPingV1.xml").should("eq",response.body)
+      cy.readFile("./cypress/ExampleRequests/getPingV1.xml").should("eq", response.body)
     })
   })
-
 })

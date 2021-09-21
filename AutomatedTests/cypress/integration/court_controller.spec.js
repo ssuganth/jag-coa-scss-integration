@@ -67,6 +67,62 @@ describe('Court Controller Tests', () => {
     })
   })
 
+  it('Test Party Name Search Api', () => {
+   var payload = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:scss="http://brooks/SCSS.Source.CeisScss.ws.provider:CeisScss">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <scss:partyNameSearch>
+         <filter>
+            <name>James</name>
+            <firstName>Jim</firstName>
+            <searchType>IND</searchType>
+            <agencyId>83.0001</agencyId>
+            <courtLevel>P</courtLevel>
+            <courtClass>M</courtClass>
+            <page>1</page>
+         </filter>
+      </scss:partyNameSearch>
+   </soapenv:Body>
+</soapenv:Envelope>`
+
+   cy.request({
+     url: Cypress.env("scss_host") + 'ws/',
+     body: payload,
+     method: 'POST',
+     headers: {
+       authorization: Cypress.env("scss_token")
+     }
+   }).then((response) => {
+     expect(response.status).to.eq(200)
+     cy.readFile("./cypress/ExampleRequests/partyNameSearchV1.xml").should("eq", response.body)
+   })
+ })
+
+ it('Test Get Party Api', () => {
+   var payload = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:scss="http://brooks/SCSS.Source.CeisScss.ws.provider:CeisScss">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <scss:getParties>
+         <physicalFileId>777</physicalFileId>
+      </scss:getParties>
+   </soapenv:Body>
+</soapenv:Envelope>`
+
+   cy.request({
+     url: Cypress.env("scss_host") + 'ws/',
+     body: payload,
+     method: 'POST',
+     headers: {
+       authorization: Cypress.env("scss_token")
+     }
+   }).then((response) => {
+     expect(response.status).to.eq(200)
+     cy.readFile("./cypress/ExampleRequests/getPartiesV1.xml").should("eq", response.body)
+   })
+ })
+
+
+
 
   it('Test Save Hearing Result Api', () => {
     var payload = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:scss="http://brooks/SCSS.Source.CeisScss.ws.provider:CeisScss">
