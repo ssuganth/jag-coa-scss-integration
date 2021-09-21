@@ -1,5 +1,5 @@
 describe('Court Controller Tests', () => {
   it('Does not do much!', () => {
-    expect(true).to.equal(false)
+    expect(true).to.equal(true)
   })
 })
