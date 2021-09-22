@@ -1,0 +1,1 @@
+<?xmlversion="1.0"encoding="utf-8"?><soapenv:Envelopexmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"xmlns:scss="http://brooks/SCSS.Source.CeisScss.ws.provider:CeisScss"><soapenv:Header/><soapenv:Body><scss:linkFile><physicalFileId>688</physicalFileId><caseActionNumber>SC000185</caseActionNumber></scss:linkFile></soapenv:Body></soapenv:Envelope>
