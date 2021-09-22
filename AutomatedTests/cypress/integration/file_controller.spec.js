@@ -2,12 +2,12 @@ describe('File Controller Tests', () => {
 
    it('tests the FileNumberSearch successful response', () => {
       cy.request({
-         url: Cypress.env("scss_host") + 'ws/',
          method: 'POST',
          headers: {
-            authorization: Cypress.env("scss_token"),
-            'Content-Type': "text/xml"
+                    authorization: Cypress.env("scss_token"),
+                    'Content-Type': "text/xml"
          },
+         url: Cypress.env('wm_host'),
          redirect: 'follow',
          body:
             `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:scss="http://brooks/SCSS.Source.CeisScss.ws.provider:CeisScss">
@@ -50,7 +50,8 @@ describe('File Controller Tests', () => {
                 </soapenv:Envelope>`
          }).then((response) => {
             expect(response.status).to.eq(200)
-            cy.readFile("./cypress/ExampleRequests/getFileNumberSearchV1.xml").should("eq",response.body.replace(/\s/g,''))
+            cy.readFile("./cypress/ExampleRequests/linkFile.xml").should("eq",response.body.replace(/\s/g,''))
          })
       })
 })
+goit
