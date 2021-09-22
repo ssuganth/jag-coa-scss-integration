@@ -44,7 +44,7 @@ public class HealthController {
 
     @PayloadRoot(namespace = SoapConfig.SOAP_NAMESPACE, localPart = "getPing")
     @ResponsePayload
-    public GetPingResponse getHealth(@RequestPayload GetPing empty) {
+    public GetPingResponse getPing(@RequestPayload GetPing empty) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(host + "ping");
 
         HttpEntity<GetPingResponse> resp =

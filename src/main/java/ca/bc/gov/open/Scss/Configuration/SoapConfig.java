@@ -6,6 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import java.time.Instant;
+import java.util.HashMap;
+import java.util.Map;
+import javax.xml.soap.SOAPMessage;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -66,7 +69,10 @@ public class SoapConfig extends WsConfigurerAdapter {
 
     @Bean
     public SaajSoapMessageFactory messageFactory() {
+        Map<String, Object> props = new HashMap<>();
+        props.put(SOAPMessage.WRITE_XML_DECLARATION, "true");
         SaajSoapMessageFactory messageFactory = new SaajSoapMessageFactory();
+        messageFactory.setMessageProperties(props);
         messageFactory.setSoapVersion(SoapVersion.SOAP_11);
         return messageFactory;
     }

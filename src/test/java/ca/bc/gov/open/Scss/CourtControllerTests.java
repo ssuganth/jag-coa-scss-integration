@@ -144,6 +144,24 @@ public class CourtControllerTests {
         //    Init response
         var cb = new GetPartiesResponse();
         CaseParty cp = new CaseParty();
+        cp.setActive(true);
+        cp.setFirstName("A");
+        cp.setAddressFirstLine("A");
+        cp.setCity("A");
+        cp.setAddressSecondLine("A");
+        cp.setCounselName("A");
+        cp.setCounselPhoneNumber("A");
+        cp.setOrganizationName("A");
+        cp.setPartyId(BigDecimal.ONE);
+        cp.setExtensionNumber("A");
+        cp.setPartyRoleCode("A");
+        cp.setPartyTypeCode("A");
+        cp.setPostalCode("A");
+        cp.setSelfRepresented(true);
+        cp.setSurname("A");
+        cp.setProvince("A");
+        cp.setPhoneNumber("A");
+
         cb.setParties(Collections.singletonList(cp));
         ResponseEntity<GetPartiesResponse> responseEntity = new ResponseEntity<>(cb, HttpStatus.OK);
 
@@ -179,6 +197,38 @@ public class CourtControllerTests {
         pnf.setName("A");
         pnf.setRoleType("A");
         pns.setFilter(pnf);
+
+        //    Init response
+        SearchResults res = new SearchResults();
+        res.setPage(BigDecimal.ONE);
+        res.setRecordsPerPage(BigDecimal.ONE);
+        res.setTotalRecords(BigDecimal.ONE);
+        res.setResults(Collections.singletonList(new CourtFile()));
+
+        ResponseEntity<SearchResults> responseEntity = new ResponseEntity<>(res, HttpStatus.OK);
+
+        //     Set up to mock ords response
+        when(restTemplate.exchange(
+                        Mockito.any(String.class),
+                        Mockito.eq(HttpMethod.GET),
+                        Mockito.<HttpEntity<String>>any(),
+                        Mockito.<Class<SearchResults>>any()))
+                .thenReturn(responseEntity);
+
+        //     Do request
+        var out = courtController.partyNameSearch(pns);
+
+        //     Assert response is correct
+        assert (out.getSearchResults().equals(res));
+    }
+
+    @Test
+    public void partNameSearchNullFilterTest() {
+        //  Init service under test
+        courtController = new CourtController(restTemplate);
+
+        //    Init request object
+        var pns = new PartyNameSearch();
 
         //    Init response
         SearchResults res = new SearchResults();
@@ -222,6 +272,7 @@ public class CourtControllerTests {
         ea.setActivityStatus("A");
         ea.setCancellationStatus("A");
         ea.setCourtAppearanceDate(Instant.now());
+        ea.setCourtAppearanceCategoryText("A");
         ea.setCourtEventSequenceID("A");
 
         var tm = new TimeMeasureDetails();
@@ -240,7 +291,7 @@ public class CourtControllerTests {
         //     Set up to mock ords response
         when(restTemplate.exchange(
                         Mockito.any(String.class),
-                        Mockito.eq(HttpMethod.GET),
+                        Mockito.eq(HttpMethod.POST),
                         Mockito.<HttpEntity<String>>any(),
                         Mockito.<Class<String>>any()))
                 .thenReturn(responseEntity);

@@ -169,7 +169,7 @@ public class NotificationControllerTests {
         //     Set up to mock ords response
         when(restTemplate.exchange(
                         Mockito.any(String.class),
-                        Mockito.eq(HttpMethod.GET),
+                        Mockito.eq(HttpMethod.DELETE),
                         Mockito.<HttpEntity<String>>any(),
                         Mockito.<Class<RemoveNotificationResponse>>any()))
                 .thenReturn(responseEntity);
@@ -193,6 +193,12 @@ public class NotificationControllerTests {
         Instant reqInstant = d.toInstant();
 
         assert inst.getStatusDatetime().compareTo(reqInstant) == 0;
+
+        instantString = "{\"statusDatetime\": \"I am bad\"}";
+
+        inst = objectMapper.readValue(instantString, Notification.class);
+
+        assert inst.getStatusDatetime() == null;
     }
 
     @Test
@@ -260,5 +266,89 @@ public class NotificationControllerTests {
                         jaxbUnmarshaller.unmarshal(new ByteArrayInputStream(in.getBytes()));
 
         assert out != null;
+
+        in =
+                "<scss:saveHearingResults xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:scss=\"http://brooks/SCSS.Source.CeisScss.ws.provider:CeisScss\">\n"
+                        + "         <hearingResult>\n"
+                        + "            <HearingResult>\n"
+                        + "               <CaseDetails>\n"
+                        + "                  <CaseTrackingID>1</CaseTrackingID>\n"
+                        + "                  <CaseFiling>1</CaseFiling>\n"
+                        + "                  <CaseAugmentation>\n"
+                        + "                     <CaseHearing>\n"
+                        + "                        <CourtEventAppearance>\n"
+                        + "                           <CourtAppearanceCourt>1</CourtAppearanceCourt>\n"
+                        + "                           <CourtAppearanceDate>03-SEP-11 05.05.05.002000 AM</CourtAppearanceDate>\n"
+                        + "                           <CourtAppearanceCategoryText>A</CourtAppearanceCategoryText>\n"
+                        + "                           <CourtEventSequenceID></CourtEventSequenceID>\n"
+                        + "                           <ActivityStatus>NOT PROCEDING</ActivityStatus>\n"
+                        + "                           <CancellationStatus>Abandoned</CancellationStatus>\n"
+                        + "                           <TimeMeasureDetails>\n"
+                        + "                              <MeasureText>1</MeasureText>\n"
+                        + "                              <MeasureUnitText>A</MeasureUnitText>\n"
+                        + "                              <MeasureEstimatedIndicator>true</MeasureEstimatedIndicator>\n"
+                        + "                           </TimeMeasureDetails>\n"
+                        + "                        </CourtEventAppearance>\n"
+                        + "                     </CaseHearing>\n"
+                        + "                  </CaseAugmentation>\n"
+                        + "               </CaseDetails>\n"
+                        + "            </HearingResult>\n"
+                        + "         </hearingResult>\n"
+                        + "      </scss:saveHearingResults>";
+
+        out =
+                (SaveHearingResults)
+                        jaxbUnmarshaller.unmarshal(new ByteArrayInputStream(in.getBytes()));
+
+        assert out.getHearingResult()
+                        .getHearingResult()
+                        .getCaseDetails()
+                        .getCaseAugmentation()
+                        .getCaseHearing()
+                        .getCourtEventAppearance()
+                        .getCourtAppearanceDate()
+                != null;
+
+        in =
+                "<scss:saveHearingResults xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:scss=\"http://brooks/SCSS.Source.CeisScss.ws.provider:CeisScss\">\n"
+                        + "         <hearingResult>\n"
+                        + "            <HearingResult>\n"
+                        + "               <CaseDetails>\n"
+                        + "                  <CaseTrackingID>1</CaseTrackingID>\n"
+                        + "                  <CaseFiling>1</CaseFiling>\n"
+                        + "                  <CaseAugmentation>\n"
+                        + "                     <CaseHearing>\n"
+                        + "                        <CourtEventAppearance>\n"
+                        + "                           <CourtAppearanceCourt>1</CourtAppearanceCourt>\n"
+                        + "                           <CourtAppearanceDate>I am bad</CourtAppearanceDate>\n"
+                        + "                           <CourtAppearanceCategoryText>A</CourtAppearanceCategoryText>\n"
+                        + "                           <CourtEventSequenceID></CourtEventSequenceID>\n"
+                        + "                           <ActivityStatus>NOT PROCEDING</ActivityStatus>\n"
+                        + "                           <CancellationStatus>Abandoned</CancellationStatus>\n"
+                        + "                           <TimeMeasureDetails>\n"
+                        + "                              <MeasureText>1</MeasureText>\n"
+                        + "                              <MeasureUnitText>A</MeasureUnitText>\n"
+                        + "                              <MeasureEstimatedIndicator>true</MeasureEstimatedIndicator>\n"
+                        + "                           </TimeMeasureDetails>\n"
+                        + "                        </CourtEventAppearance>\n"
+                        + "                     </CaseHearing>\n"
+                        + "                  </CaseAugmentation>\n"
+                        + "               </CaseDetails>\n"
+                        + "            </HearingResult>\n"
+                        + "         </hearingResult>\n"
+                        + "      </scss:saveHearingResults>";
+
+        out =
+                (SaveHearingResults)
+                        jaxbUnmarshaller.unmarshal(new ByteArrayInputStream(in.getBytes()));
+
+        assert out.getHearingResult()
+                        .getHearingResult()
+                        .getCaseDetails()
+                        .getCaseAugmentation()
+                        .getCaseHearing()
+                        .getCourtEventAppearance()
+                        .getCourtAppearanceDate()
+                == null;
     }
 }
