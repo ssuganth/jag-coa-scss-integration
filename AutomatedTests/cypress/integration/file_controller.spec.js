@@ -1,13 +1,13 @@
 describe('File Controller Tests', () => {
 
-   it('Filenumbersearch test good result', () => {
-      var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "text/xml");
-      myHeaders.append("Cookie", "ssnid=885f8220165311ecaf81c6d7dc943fe7");
+   it('tests the FileNumberSearch successful response', () => {
       cy.request({
+         url: Cypress.env("scss_host") + 'ws/',
          method: 'POST',
-         headers: myHeaders,
-         url: Cypress.env('wm_host'),
+         headers: {
+            authorization: Cypress.env("scss_token"),
+            'Content-Type': "text/xml"
+         },
          redirect: 'follow',
          body:
             `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:scss="http://brooks/SCSS.Source.CeisScss.ws.provider:CeisScss">
@@ -24,8 +24,33 @@ describe('File Controller Tests', () => {
          </soapenv:Body>
       </soapenv:Envelope>`
       }).then((response) => {
-         cy.log(response.body)
-         expect(response.body)
+         expect(response.status).to.eq(200)
+         cy.readFile("./cypress/ExampleRequests/getFileNumberSearchV1.xml").should("eq",response.body.replace(/\s/g,''))
       })
    })
+
+   xit('tests the linkFiles successful response', () => {
+         cy.request({
+            url: Cypress.env("scss_host") + 'ws/',
+            method: 'POST',
+            headers: {
+               authorization: Cypress.env("scss_token"),
+               'Content-Type': "text/xml"
+            },
+            redirect: 'follow',
+            body:
+               `<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:scss="http://brooks/SCSS.Source.CeisScss.ws.provider:CeisScss">
+                   <soapenv:Header/>
+                   <soapenv:Body>
+                      <scss:linkFile>
+                         <physicalFileId>688</physicalFileId>
+                         <caseActionNumber>SC000185</caseActionNumber>
+                      </scss:linkFile>
+                   </soapenv:Body>
+                </soapenv:Envelope>`
+         }).then((response) => {
+            expect(response.status).to.eq(200)
+            cy.readFile("./cypress/ExampleRequests/getFileNumberSearchV1.xml").should("eq",response.body.replace(/\s/g,''))
+         })
+      })
 })
