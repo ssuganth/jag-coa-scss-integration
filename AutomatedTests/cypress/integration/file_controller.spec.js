@@ -9,18 +9,18 @@ describe('File Controller Tests', () => {
          url: Cypress.env('scss_host') + "ws/",
          body:
             `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:scss="http://brooks/SCSS.Source.CeisScss.ws.provider:CeisScss">
-         <soapenv:Header/>
-         <soapenv:Body>
-            <scss:fileNumberSearch>
-               <filter>
-                  <courtFileNumber>9950</courtFileNumber>
-                  <locationId>16218.0026</locationId>
-                  <courtLevelCode>P</courtLevelCode>
-                  <courtClassCode>F</courtClassCode>
-               </filter>
-            </scss:fileNumberSearch>
-         </soapenv:Body>
-      </soapenv:Envelope>`
+               <soapenv:Header/>
+               <soapenv:Body>
+                  <scss:fileNumberSearch>
+                     <filter>
+                        <courtFileNumber>9950</courtFileNumber>
+                        <locationId>16218.0026</locationId>
+                        <courtLevelCode>P</courtLevelCode>
+                        <courtClassCode>F</courtClassCode>
+                     </filter>
+                  </scss:fileNumberSearch>
+               </soapenv:Body>
+            </soapenv:Envelope>`
       }).then((response) => {
          expect(response.status).to.eq(200)
          cy.readFile("./cypress/ExampleRequests/getFileNumberSearchV1.xml").should("eq",response.body)
@@ -29,15 +29,16 @@ describe('File Controller Tests', () => {
 
    it('tests the linkFiles successful response', () => {
 
-         var payload =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:scss="http://brooks/SCSS.Source.CeisScss.ws.provider:CeisScss">
-         <soapenv:Header/>
-         <soapenv:Body>
+         var payload = 
+         `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:scss="http://brooks/SCSS.Source.CeisScss.ws.provider:CeisScss">
+            <soapenv:Header/>
+             <soapenv:Body>
             <scss:linkFile>
                <physicalFileId>688</physicalFileId>
                <caseActionNumber>SC000185</caseActionNumber>
             </scss:linkFile>
-         </soapenv:Body>
-      </soapenv:Envelope>`
+            </soapenv:Body>
+         </soapenv:Envelope>`
 
          cy.request({
             url: Cypress.env("scss_host") + 'ws/',
@@ -49,7 +50,7 @@ describe('File Controller Tests', () => {
               
          }).then((response) => {
             expect(response.status).to.eq(200)
-            var out  = response.body // cy.readFile("./cypress/ExampleRequests/getFileNumberSearchV1.xml").should("eq",response.body)
+            var out  = response.body
             out = out.split("<linkId>")
             out[1] = out[1].replace(/\d*/,'')
             out = out[0] + "<linkId>" + out[1]
@@ -60,15 +61,16 @@ describe('File Controller Tests', () => {
       
    it('tests the unlinkFiles successful response', () => {
 
-      var payload = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:scss="http://brooks/SCSS.Source.CeisScss.ws.provider:CeisScss">
-      <soapenv:Header/>
-      <soapenv:Body>
-         <scss:unlinkFile>
-            <physicalFileId>688</physicalFileId>
-            <caseActionNumber>SC000185</caseActionNumber>
-         </scss:unlinkFile>
-      </soapenv:Body>
-   </soapenv:Envelope>`
+      var payload = 
+      `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:scss="http://brooks/SCSS.Source.CeisScss.ws.provider:CeisScss">
+         <soapenv:Header/>
+         <soapenv:Body>
+            <scss:unlinkFile>
+               <physicalFileId>688</physicalFileId>
+               <caseActionNumber>SC000185</caseActionNumber>
+            </scss:unlinkFile>
+         </soapenv:Body>
+      </soapenv:Envelope>`
 
       cy.request({
          url: Cypress.env("scss_host") + 'ws/',
